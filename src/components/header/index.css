@@ -1,0 +1,15 @@
+.header-wrapper {
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4)),
+    url(../../assest/image/bg.avif) no-repeat center/cover;
+  padding: 10rem 6rem;
+  color: var(--light-color);
+}
+
+.header-wrapper header {
+  font-size: 5rem;
+  margin-bottom: 4rem;
+}
+
+.header-wrapper p {
+  font-size: 2rem;
+}
