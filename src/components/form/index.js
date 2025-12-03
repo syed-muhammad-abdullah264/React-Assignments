@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import "./index.css";
-
-
+import "./index.module.css";
 
 function Form() {
-  const [formData, setFormData] = useState({
+  const [data, setData] = useState({
     studentName: "",
     mobileNum: "",
     email: "",
@@ -22,26 +20,26 @@ function Form() {
     let { value, name, type, files } = e.target;
 
     if (type === "file") {
-      setFormData({ ...formData, [name]: files[0] });
+      setData({ ...data, [name]: files[0] });
       return;
     }
-    setFormData({ ...formData, [name]: value });
+    setData({ ...data, [name]: value });
   };
 
   const handleBranchChange = (e) => {
     const { value, checked } = e.target;
-    let updatedBranches = [...formData.branches];
+    let updatedBranches = [...data.branches];
     if (checked) {
       updatedBranches.push(value);
     } else {
       updatedBranches = updatedBranches.filter((b) => b !== value);
     }
-    setFormData({ ...formData, branches: updatedBranches });
+    setData({ ...data, branches: updatedBranches });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    console.log(data);
     alert("Form submitted successfully!");
   };
 
@@ -53,7 +51,7 @@ function Form() {
         <input
           type="text"
           name="studentName"
-          value={formData.studentName}
+          value={data.studentName}
           onChange={handleChange}
         ></input>
 
@@ -63,7 +61,7 @@ function Form() {
             <input
               type="text"
               name="mobileNum"
-              value={formData.mobileNum}
+              value={data.mobileNum}
               onChange={handleChange}
             ></input>
           </div>
@@ -72,7 +70,7 @@ function Form() {
             <input
               type="email"
               name="email"
-              value={formData.email}
+              value={data.email}
               onChange={handleChange}
             ></input>
           </div>
@@ -84,7 +82,7 @@ function Form() {
             <input
               type="text"
               name="fatherName"
-              value={formData.fatherName}
+              value={data.fatherName}
               onChange={handleChange}
             ></input>
           </div>
@@ -93,7 +91,7 @@ function Form() {
             <input
               type="text"
               name="motherName"
-              value={formData.motherName}
+              value={data.motherName}
               onChange={handleChange}
             ></input>
           </div>
@@ -101,11 +99,7 @@ function Form() {
         <div className="row">
           <div>
             <label>Select Course</label>
-            <select
-              name="course"
-              value={formData.course}
-              onChange={handleChange}
-            >
+            <select name="course" value={data.course} onChange={handleChange}>
               <option value="">Select...</option>
               <option value="BCA">BCA</option>
               <option value="BBA">BBA</option>
@@ -118,7 +112,7 @@ function Form() {
             <input
               type="date"
               name="dob"
-              value={formData.dob}
+              value={data.dob}
               onChange={handleChange}
             ></input>
           </div>
@@ -163,7 +157,7 @@ function Form() {
         <textarea
           name="address"
           rows={4}
-          value={formData.address}
+          value={data.address}
           onChange={handleChange}
         ></textarea>
         <button type="submit" className="submit-btn">
