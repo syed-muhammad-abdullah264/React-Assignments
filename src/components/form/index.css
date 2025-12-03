@@ -75,6 +75,10 @@ textarea {
   cursor: pointer;
 }
 
+.submit-btn:hover {
+  background: darkred;
+}
+
 input[type="file"] {
   padding: 3px;
 }
