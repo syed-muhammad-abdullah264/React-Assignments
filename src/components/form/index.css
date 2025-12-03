@@ -7,6 +7,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
   padding: 30px 0;
 }
 
@@ -56,7 +57,8 @@ textarea {
   align-items: center;
 }
 
-.gender-group input, .branch-group input {
+.gender-group input,
+.branch-group input {
   margin-bottom: 0;
   width: 1rem;
   height: 1rem;
@@ -71,4 +73,8 @@ textarea {
   font-size: 16px;
   border-radius: 6px;
   cursor: pointer;
+}
+
+input[type="file"] {
+  padding: 3px;
 }
