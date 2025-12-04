@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "./index.css";
+import styles from "./index.module.css";
 
-function Form() {
+function Form({ addStudent }) {
   const [data, setData] = useState({
     studentName: "",
     mobileNum: "",
@@ -17,13 +17,12 @@ function Form() {
   });
 
   const handleChange = (e) => {
-    let { value, name, type, files } = e.target;
-
+    const { name, value, type, files } = e.target;
     if (type === "file") {
       setData({ ...data, [name]: files[0] });
-      return;
+    } else {
+      setData({ ...data, [name]: value });
     }
-    setData({ ...data, [name]: value });
   };
 
   const handleBranchChange = (e) => {
@@ -39,13 +38,29 @@ function Form() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(data);
-    alert("Form submitted successfully!");
+    if (!data.studentName || !data.email) {
+      alert("Please fill required fields!");
+      return;
+    }
+    addStudent(data);
+    setData({
+      studentName: "",
+      mobileNum: "",
+      email: "",
+      fatherName: "",
+      motherName: "",
+      course: "",
+      dob: "",
+      gender: "",
+      branches: [],
+      photo: null,
+      address: "",
+    });
   };
 
   return (
-    <div className="form-container">
-      <form className="form-box" onSubmit={handleSubmit}>
+    <div className={styles.formContainer}>
+      <form className={styles.formBox} onSubmit={handleSubmit}>
         <h2>Student Registration Form</h2>
         <label>Student Name</label>
         <input
@@ -53,9 +68,8 @@ function Form() {
           name="studentName"
           value={data.studentName}
           onChange={handleChange}
-        ></input>
-
-        <div className="row">
+        />
+        <div className={styles.row}>
           <div>
             <label>Mobile No</label>
             <input
@@ -63,20 +77,19 @@ function Form() {
               name="mobileNum"
               value={data.mobileNum}
               onChange={handleChange}
-            ></input>
+            />
           </div>
           <div>
-            <label>Email Id</label>
+            <label>Email</label>
             <input
               type="email"
               name="email"
               value={data.email}
               onChange={handleChange}
-            ></input>
+            />
           </div>
         </div>
-
-        <div className="row">
+        <div className={styles.row}>
           <div>
             <label>Father Name</label>
             <input
@@ -84,7 +97,7 @@ function Form() {
               name="fatherName"
               value={data.fatherName}
               onChange={handleChange}
-            ></input>
+            />
           </div>
           <div>
             <label>Mother Name</label>
@@ -93,12 +106,12 @@ function Form() {
               name="motherName"
               value={data.motherName}
               onChange={handleChange}
-            ></input>
+            />
           </div>
         </div>
-        <div className="row">
+        <div className={styles.row}>
           <div>
-            <label>Select Course</label>
+            <label>Course</label>
             <select name="course" value={data.course} onChange={handleChange}>
               <option value="">Select...</option>
               <option value="BCA">BCA</option>
@@ -108,59 +121,88 @@ function Form() {
             </select>
           </div>
           <div>
-            <label>Date Of Birth</label>
+            <label>DOB</label>
             <input
               type="date"
               name="dob"
               value={data.dob}
               onChange={handleChange}
-            ></input>
+            />
           </div>
         </div>
-        <div className="row">
+        <div className={styles.row}>
+          <div className={styles.genderGroup}>
+            <input
+              type="radio"
+              id="male"
+              name="gender"
+              value="Male"
+              onChange={handleChange}
+            />
+            <label htmlFor="male">Male</label>
+
+            <input
+              type="radio"
+              id="female"
+              name="gender"
+              value="Female"
+              onChange={handleChange}
+            />
+            <label htmlFor="female">Female</label>
+          </div>
+
           <div>
-            <label>Gender</label>
-            <div className="gender-group">
-              <input
-                type="radio"
-                name="gender"
-                value="Male"
-                onChange={handleChange}
-              />
-              <label>Male</label>
-              <input
-                type="radio"
-                name="gender"
-                value="Female"
-                onChange={handleChange}
-              />
-              <label>Female</label>
-            </div>
-          </div>
-          <div>
-            <label>Student Photo</label>
-            <input type="file" name="photo" onChange={handleChange}></input>
+            <label>Photo</label>
+            <input type="file" name="photo" onChange={handleChange} />
           </div>
         </div>
-        <label>Select Branch</label>
-        <div className="branch-group">
-          <input type="checkbox" value="CSE" onChange={handleBranchChange} />
-          <label>CSE</label>
-          <input type="checkbox" value="IT" onChange={handleBranchChange} />
-          <label>IT</label>
-          <input type="checkbox" value="ECE" onChange={handleBranchChange} />
-          <label>ECE</label>
-          <input type="checkbox" value="Civil" onChange={handleBranchChange} />
-          <label>Civil</label>
+        <label>Branches</label>
+        <div className={styles.branchGroup}>
+          <input
+            type="checkbox"
+            id="cse"
+            value="CSE"
+            checked={data.branches.includes("CSE")}
+            onChange={handleBranchChange}
+          />
+          <label htmlFor="cse">CSE</label>
+
+          <input
+            type="checkbox"
+            id="it"
+            value="IT"
+            checked={data.branches.includes("IT")}
+            onChange={handleBranchChange}
+          />
+          <label htmlFor="it">IT</label>
+
+          <input
+            type="checkbox"
+            id="ece"
+            value="ECE"
+            checked={data.branches.includes("ECE")}
+            onChange={handleBranchChange}
+          />
+          <label htmlFor="ece">ECE</label>
+
+          <input
+            type="checkbox"
+            id="civil"
+            value="Civil"
+            checked={data.branches.includes("Civil")}
+            onChange={handleBranchChange}
+          />
+          <label htmlFor="civil">Civil</label>
         </div>
+
         <label>Address</label>
         <textarea
           name="address"
           rows={4}
           value={data.address}
           onChange={handleChange}
-        ></textarea>
-        <button type="submit" className="submit-btn">
+        />
+        <button type="submit" className={styles.submitBtn}>
           Submit
         </button>
       </form>
